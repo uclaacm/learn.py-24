@@ -1,11 +1,9 @@
 import cv2
 import argparse
-import math
-import progressbar
-from pointillism import utils, pointillism
+from pointillism import pointillism
 from pop import pop
 
-valid_ops = ["oil-painting", "watercolor", "cartoon", "sketch-bw", "sketch-c", "pop"]
+valid_ops = ["oil-painting", "watercolor", "cartoon", "sketch-bw", "sketch-c", "pop", "pointillism"]
 
 parser = argparse.ArgumentParser(description='...')
 parser.add_argument('img_path', nargs='?', default="images/ucla.jpg")
@@ -35,7 +33,9 @@ for op in args.ops or [valid_ops[0]]:
     elif (op == "pop"):
         res = pop.popify_image(img, background_color=[255, 255, 255], dot_color=(0, 0, 0))
 
-    cv2.imshow("res", utils.limit_size(res, 1080))
+    elif (op == "pointillism"):
+        res = pointillism.draw_pointillism(img, palette_size=20, stroke_scale=0, grad_smoothing_radius=0)
+
 
     res_path = args.img_path.rsplit(".", -1)[0] + f"-{op}-drawing.png"
     cv2.imwrite(res_path, res)
