@@ -10,6 +10,7 @@ parser = argparse.ArgumentParser(description='...')
 parser.add_argument('img_path', nargs='?', default="images/ucla.jpg")
 for op in valid_ops:
     parser.add_argument(f"--{op}", dest="ops", action="append_const", const=op)
+parser.add_argument("--all", dest="ops", action="store_const", const=valid_ops)
 
 args = parser.parse_args()
 
