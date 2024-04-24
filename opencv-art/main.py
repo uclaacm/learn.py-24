@@ -10,6 +10,7 @@ parser.add_argument('img_path', nargs='?', default="images/ucla.jpg")
 for op in valid_ops:
     parser.add_argument(f"--{op}", dest="ops", action="append_const", const=op)
 parser.add_argument("--all", dest="ops", action="store_const", const=valid_ops)
+parser.add_argument("--display", dest="display", action="store_true")
 
 args = parser.parse_args()
 
@@ -36,6 +37,8 @@ for op in args.ops or [valid_ops[0]]:
     elif (op == "pointillism"):
         res = pointillism.draw_pointillism(img, palette_size=20, stroke_scale=0, grad_smoothing_radius=0)
 
+    if (args.display):
+        cv2.imshow("res", res)
 
     res_path = args.img_path.rsplit(".", -1)[0] + f"-{op}-drawing.png"
     cv2.imwrite(res_path, res)
