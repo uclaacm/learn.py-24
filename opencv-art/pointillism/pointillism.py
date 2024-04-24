@@ -1,7 +1,7 @@
 import numpy as np
 import math
 import cv2
-import progressbar
+import progressbar as pb
 from .vector_field import VectorField
 from .color_palette import ColorPalette
 from .utils import randomized_grid, compute_color_probabilities, color_select
@@ -29,7 +29,7 @@ def draw_pointillism(img, palette_size=20, stroke_scale=0, grad_smoothing_radius
     grid = randomized_grid(img.shape[0], img.shape[1], scale=3)
     batch_size = 10000
 
-    bar = progressbar.ProgressBar(widgets=["Pointillism Image ", progressbar.Bar()])   
+    bar = pb.ProgressBar(widgets=["Pointillism Image ", pb.Bar(), " ", pb.Percentage()])   
     for h in bar(range(0, len(grid), batch_size)):
         # get the pixel colors at each point of the grid
         pixels = np.array([img[x[0], x[1]] for x in grid[h:min(h + batch_size, len(grid))]])

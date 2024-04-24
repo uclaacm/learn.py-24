@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import progressbar
+import progressbar as pb
 
 def popify_image(image, background_color=[255, 255, 255], dot_color=(0, 0, 0), max_dots=120):
     # make image grayscale
@@ -32,7 +32,7 @@ def popify_image(image, background_color=[255, 255, 255], dot_color=(0, 0, 0), m
     blank_image = np.full(((blank_img_height),(blank_img_width),3), background_color,dtype=np.uint8)
 
     # run through each pixel and draw the circle on our blank canvas
-    bar = progressbar.ProgressBar(widgets=["Pop Art Image ", progressbar.Bar()])    
+    bar = pb.ProgressBar(widgets=["Pop Art Image ", pb.Bar(), " ", pb.Percentage()])    
     for y in bar(range(0,downsized_image_height)):
         for x in range(0,downsized_image_width):
             cv2.circle(blank_image,(((x*multiplier)+padding),((y*multiplier)+padding)), int((0.6 * multiplier) * ((255-downsized_image[y][x])/255)), dot_color, -1)
