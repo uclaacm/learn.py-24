@@ -14,7 +14,7 @@ for op in valid_ops:
 args = parser.parse_args()
 
 img = cv2.imread(args.img_path)    
-for op in args.ops:
+for op in args.ops or [valid_ops[0]]:
     if (op == "oil-painting"):
         res = cv2.xphoto.oilPainting(img, 7, 1)
 
