@@ -1,6 +1,6 @@
 import cv2
 import argparse
-from pointillism import pointillism
+from pointillism import pointillism, utils
 from pop import pop
 
 valid_ops = ["oil-painting", "watercolor", "cartoon", "sketch-bw", "sketch-c", "pop", "pointillism"]
@@ -38,7 +38,7 @@ for op in args.ops or [valid_ops[0]]:
         res = pointillism.draw_pointillism(img, palette_size=20, stroke_scale=0, grad_smoothing_radius=0)
 
     if (args.display):
-        cv2.imshow("res", res)
+        cv2.imshow("res", utils.limit_size(res, 1080))
 
     res_path = args.img_path.rsplit(".", -1)[0] + f"-{op}-drawing.png"
     cv2.imwrite(res_path, res)
