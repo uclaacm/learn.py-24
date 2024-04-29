@@ -11,10 +11,12 @@ parser.add_argument('img_path', nargs='?', default="images/ucla.jpg")
 for op in valid_ops:
     parser.add_argument(f"--{op}", dest="ops", action="append_const", const=op)
 parser.add_argument("--all", dest="ops", action="store_const", const=valid_ops)
+
 parser.add_argument("--display", dest="display", action="store_true")
 
 parser.add_argument("-s", "--sigma-s", default=60, dest="sigma_s")
-parser.add_argument("-r", "--sigma-r", default=0.6, dest="sigma_r")
+parser.add_argument("-r", "--sigma-r", default=0.15, dest="sigma_r")
+parser.add_argument("-w", "--watercolor-r", default=0.6, dest="watercolor_r")
 parser.add_argument("-f", "--shade-factor", default=0.05, dest="shade_factor")
 parser.add_argument("-b", "--brush-size", default=7, dest="brush_size")
 
@@ -26,7 +28,7 @@ for op in args.ops or [valid_ops[0]]:
         res = cv2.xphoto.oilPainting(img, args.brush_size, 1)
 
     elif (op == "watercolor"):
-        res = cv2.stylization(img, sigma_s=args.sigma_s, sigma_r=args.sigma_r)
+        res = cv2.stylization(img, sigma_s=args.sigma_s, sigma_r=args.watercolor_r)
 
     elif (op == "cartoon"):
         res = cv2.medianBlur(img, args.brush_size)
