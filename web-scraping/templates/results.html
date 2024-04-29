@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .result-item {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Results</h1>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                {% if results %}
+                    {% for hint, answer in results %}
+                        <div class="result-item">
+                            <strong>Clue:</strong> {{ hint }} <br>
+                            <strong>Solution:</strong> {{ answer }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No matching clues and solutions found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
