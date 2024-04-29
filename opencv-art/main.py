@@ -2,8 +2,9 @@ import cv2
 import argparse
 from pointillism import pointillism, utils
 from pop import pop
+from fried import fried
 
-valid_ops = ["oil-painting", "watercolor", "cartoon", "sketch-bw", "sketch-c", "pop", "pointillism"]
+valid_ops = ["oil-painting", "watercolor", "cartoon", "fried", "sketch-bw", "sketch-c", "pop", "pointillism"]
 
 parser = argparse.ArgumentParser(description='...')
 parser.add_argument('img_path', nargs='?', default="images/ucla.jpg")
@@ -41,6 +42,9 @@ for op in args.ops or [valid_ops[0]]:
 
     elif (op == "pointillism"):
         res = pointillism.draw_pointillism(img, palette_size=20, stroke_scale=0, grad_smoothing_radius=0)
+
+    elif (op == "fried"):
+        res = fried.fry_image(img)
 
     if (args.display):
         cv2.imshow("res", utils.limit_size(res, 1080))
