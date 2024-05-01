@@ -51,6 +51,7 @@ for op in args.ops or [valid_ops[0]]:
     if (args.display):
         cv2.imshow("res", utils.limit_size(res, 1080))
 
-    res_path = f"./output-{op}-drawing.png"
+    file_name = args.img_path.split(".")[0].split('/')[-1]
+    res_path = f"./output/{file_name}-{op}-drawing.png"
     cv2.imwrite(res_path, res)
     cv2.waitKey(0)
