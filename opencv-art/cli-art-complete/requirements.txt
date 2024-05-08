@@ -1,6 +1,0 @@
-numpy
-opencv-python
-opencv-contrib-python
-progressbar2
-scikit-learn
-scipy
