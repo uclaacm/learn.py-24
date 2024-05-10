@@ -5,22 +5,17 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from collections import defaultdict
 import json
-import time
 
 # selenium setup
 driver = webdriver.Chrome()
-driver.get("https://downforacross.com/")
-wait = WebDriverWait(driver, timeout=5)
+driver.get("https://downforacross.com/?search=ny+time")
+wait = WebDriverWait(driver, timeout=20)
 
-# set up database
+# set up database 
 db = defaultdict(list)
 
-# search for only ny times crosswords
-search_bar = driver.find_element(by=By.CLASS_NAME, value="welcome--searchbar")
-search_bar.send_keys("ny times")
-time.sleep(1.5) # wait for search results to load (might be a better way to do this)
-
 # get all entries
+wait.until(EC.presence_of_element_located((By.CLASS_NAME, "entry--container")))
 entry_containers = driver.find_elements(by=By.CLASS_NAME, value="entry--container")
 
 # iterate over entry--container divs
@@ -70,7 +65,7 @@ for i in range(len(entry_containers)):
     driver.back()
 
     # update JSON file
-    with open('/Users/einar/Documents/UCLA/Workshops/learnpy-s24/db.json', 'w') as file:
+    with open('./db.json', 'w') as file:
         json.dump(db, file)
 
     # wait for page to load
