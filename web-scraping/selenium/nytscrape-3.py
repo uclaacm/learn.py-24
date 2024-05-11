@@ -1,26 +1,14 @@
+# reveal answers
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from collections import defaultdict
-import json
-
 # selenium setup
 driver = webdriver.Chrome()
 driver.get("https://downforacross.com/?search=ny+time")
 wait = WebDriverWait(driver, timeout=20)
-
-# set up database 
-db = defaultdict(list)
-
-# load current db from file
-with open('./db.json', 'r') as file:
-    # load the database from the file 
-    db1 = json.load(file)
-
-    # update the database with the new data
-    db.update(db1)
 
 # get all entries
 wait.until(EC.presence_of_element_located((By.CLASS_NAME, "entry--container")))
@@ -42,7 +30,8 @@ for i in range(len(entry_containers)):
     listview_button = driver.find_element(by=By.CLASS_NAME, value="toolbar--list-view")
     listview_button.click()
 
-    # reveal answers
+    ##############################
+    # NEW: reveal answers ########
     reveal_div = driver.find_element(by=By.CLASS_NAME, value="reveal")
     reveal_div.find_element(by=By.CSS_SELECTOR, value="button").click()
 
@@ -53,28 +42,10 @@ for i in range(len(entry_containers)):
 
     wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "swal-button--danger")))
     confirm_button.click()
-
-    # gather clues and answers
-    clues = driver.find_elements(by=By.CLASS_NAME, value="list-view--list--clue")
-
-    for clue_div in clues:    
-        clue = clue_div.find_element(by=By.CSS_SELECTOR, value="span").text
-
-        # get answer
-        grid = clue_div.find_element(by=By.CSS_SELECTOR, value="table")
-        cells = grid.find_elements(by=By.CSS_SELECTOR, value="td")
-        answer = "".join(cell.find_element(by=By.CLASS_NAME, value="cell--value").text for cell in cells)
-
-        # Add the clue and answer to the database
-        for word in clue.split():
-            db[word.lower()].append((clue, answer))
+    ##############################
 
     # go back to ny times results page
     driver.back()
-
-    # update JSON file
-    with open('./db.json', 'w') as file:
-        json.dump(db, file)
 
     # wait for page to load
     wait.until(EC.presence_of_element_located((By.CLASS_NAME, "entry--container")))
