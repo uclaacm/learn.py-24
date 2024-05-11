@@ -14,6 +14,13 @@ wait = WebDriverWait(driver, timeout=20)
 # set up database 
 db = defaultdict(list)
 
+with open('./db.json', 'r') as file:
+    # load the database from the file 
+    db1 = json.load(file)
+
+    # update the database with the new data
+    db.update(db1)
+
 # get all entries
 wait.until(EC.presence_of_element_located((By.CLASS_NAME, "entry--container")))
 entry_containers = driver.find_elements(by=By.CLASS_NAME, value="entry--container")
