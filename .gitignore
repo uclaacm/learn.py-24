@@ -9,3 +9,7 @@ venv.bak/
 
 __pycache__/
 *.pyc
+
+*.cfg
+*.weights
+*.names
